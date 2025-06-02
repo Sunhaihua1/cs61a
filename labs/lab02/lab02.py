@@ -1,4 +1,4 @@
-
+import math
 def composite_identity(f, g):
     """
     Return a function with one parameter x that returns True if f(g(x)) is
@@ -14,6 +14,7 @@ def composite_identity(f, g):
     False
     """
     "*** YOUR CODE HERE ***"
+    return lambda x: f(g(x)) == g(f(x))
 
 
 def sum_digits(y):
@@ -60,7 +61,15 @@ def count_cond(condition):
     8
     """
     "*** YOUR CODE HERE ***"
-
+    def f(x):
+        count = 0
+        i = 1
+        while i <= x:
+            if condition(x, i):
+                count += 1
+            i += 1
+        return count
+    return f
 
 def multiple(a, b):
     """Return the smallest number n that is a multiple of both a and b.
@@ -71,6 +80,7 @@ def multiple(a, b):
     42
     """
     "*** YOUR CODE HERE ***"
+    return a * b // math.gcd(a, b)
 
 
 
@@ -101,4 +111,16 @@ def cycle(f1, f2, f3):
     19
     """
     "*** YOUR CODE HERE ***"
-
+    def g(n):
+        def gen(x):
+            ans = x
+            for i in range(1, n + 1):
+                if i % 3 == 2:
+                    ans = f2(ans)
+                elif i % 3 == 1:
+                    ans = f1(ans)
+                elif i % 3 == 0:
+                    ans = f3(ans)
+            return ans
+        return gen
+    return g
